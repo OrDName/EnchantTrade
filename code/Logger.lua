@@ -27,7 +27,7 @@ function Logger:timestamp(utc)
 end
 
 function Logger:log(str)
-	self.file:write("[" .. os.date("%d-%m-%Y %H:%M:%S", timestamp(3)) .. "] " .. str);
+	self.file:write("[" .. os.date("%d-%m-%Y %H:%M:%S", self:timestamp(3)) .. "] " .. str);
 end
 
 function Logger:close()
