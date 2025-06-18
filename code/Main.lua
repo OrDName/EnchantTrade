@@ -32,6 +32,9 @@ end
 
 function login(player)
 	os.sleep(0.5)
+	if (pim.getInventoryName() ~= player) then
+		return;
+	end
 	s0:drawLoading()
 	ex0 = Exchanger:new(player);
 	ex0:updateHash();
@@ -47,7 +50,7 @@ function logout()
 	Logger:log("Main | Logout: " .. current_player);
 	clearUsers();
 	current_player = "";
-	require("component").gpu.fill(1,1,64,19,' ');
+	gpu.fill(1,1,64,19,' ');
 	s0:drawWaiting();
 	s0:setButtonsState(false);
 	ex0 = nil;
@@ -55,11 +58,15 @@ end
 
 while (isRunning) do
 	local ev = {computer.pullSignal(0)};
-	if (ev[1] == "player_on") then
-		login(ev[2])
-	elseif (ev[1] == "player_off") then
-		logout();
-	elseif (ev[1] == "touch") then
+	if (ev[1] ~= "player_on" and ev[1] ~= "player_off" and pim.getInventoryName() ~= "pim") then
+		s0:drawWaiting();
+		os.sleep(0.5);
+	else
+		if (pim.getInventoryName() == ev[2]) then
+			login(ev[2])
+		end
+	end
+	if (ev[1] == "touch") then
 		if (ev[6] == current_player) then
 			local x, y = ev[3], ev[4];
 			local r = s0:handleTouch(x, y)
