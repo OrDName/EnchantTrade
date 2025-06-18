@@ -46,6 +46,8 @@ function logout()
 	Logger:log("Main | Logout: " .. current_player);
 	clearUsers();
 	current_player = "";
+	require("component").gpu.fill(1,1,64,19,' ');
+	os.sleep(0.1);
 	s0:drawWaiting();
 	s0:setButtonsState(false);
 	ex0 = nil;
