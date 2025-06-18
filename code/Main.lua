@@ -65,7 +65,7 @@ while (isRunning) do
 			submit = type(r) == "boolean" and r or false;
 			if (ind >= 1 and ind <= 4) then
 				if (submit) then 
-					Logger:log("Main | Chosen index: " .. tostring(ind))
+					Logger:log("Main | Chosen index: " .. tostring(ind));
 					ex0:trade(ind);
 				end 
 				drawItems(ind);
