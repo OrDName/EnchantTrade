@@ -1,7 +1,7 @@
 local fs = require("filesystem");
 local Logger = {};
 Logger.__index = Logger;
-
+--
 function Logger:new(path);
 	local log_file, str = io.open(path, "a");
 	if (not log_file) then
