@@ -31,10 +31,10 @@ function drawItems(index)
 end
 
 function login(player)
+	os.sleep(0.5)
 	s0:drawLoading()
 	ex0 = Exchanger:new(player);
 	ex0:updateHash();
-	os.sleep()
 	ind, submit = -1, false;
 	current_player = player;
 	computer.addUser(player);
@@ -48,7 +48,6 @@ function logout()
 	clearUsers();
 	current_player = "";
 	require("component").gpu.fill(1,1,64,19,' ');
-	os.sleep(0.7);
 	s0:drawWaiting();
 	s0:setButtonsState(false);
 	ex0 = nil;
