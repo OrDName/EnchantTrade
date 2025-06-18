@@ -34,6 +34,7 @@ function login(player)
 	s0:drawLoading()
 	ex0 = Exchanger:new(player);
 	ex0:updateHash();
+	os.sleep()
 	ind, submit = -1, false;
 	current_player = player;
 	computer.addUser(player);
@@ -47,14 +48,14 @@ function logout()
 	clearUsers();
 	current_player = "";
 	require("component").gpu.fill(1,1,64,19,' ');
-	os.sleep(0.1);
+	os.sleep(0.7);
 	s0:drawWaiting();
 	s0:setButtonsState(false);
 	ex0 = nil;
 end
 
 while (isRunning) do
-	local ev = {event.pull()};
+	local ev = {computer.pullSignal(0)};
 	if (ev[1] == "player_on") then
 		login(ev[2])
 	elseif (ev[1] == "player_off") then
