@@ -62,9 +62,9 @@ while (isRunning) do
 		s0:drawWaiting();
 		os.sleep(0.5);
 	else
-		if (pim.getInventoryName() == ev[2]) then
-			login(ev[2])
-		end
+		-- if (pim.getInventoryName() == ev[2]) then
+		login(ev[2])
+		-- end
 	end
 	if (ev[1] == "touch") then
 		if (ev[6] == current_player) then
