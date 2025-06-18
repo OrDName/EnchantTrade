@@ -58,7 +58,7 @@ end
 
 while (isRunning) do
 	local ev = {computer.pullSignal(0)};
-	if (ev[1] ~= "player_on" and ev[1] ~= "player_off" and pim.getInventoryName() ~= "pim") then
+	if (ev[1] ~= "player_on" and ev[1] == "player_off" and pim.getInventoryName() == "pim") then
 		s0:drawWaiting();
 		os.sleep(0.5);
 	else
