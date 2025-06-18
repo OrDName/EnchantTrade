@@ -34,6 +34,6 @@ function Logger:close()
 	self.file:close();
 end
 
-local instance = Logger:new();
+local instance = Logger:new("/home/trade.log");
 
 return instance;
