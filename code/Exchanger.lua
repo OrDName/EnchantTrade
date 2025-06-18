@@ -1,4 +1,4 @@
-local GPUHandler, TankHash, EnchantHash, ItemTransfer, METransfer, status = require("GPUHandler"), require("TankHash"), require("EnchantHash"), require("ItemTransfer"), require("METransfer"), require("status");
+local Logger, GPUHandler, TankHash, EnchantHash, ItemTransfer, METransfer, status = require("Logger"), require("GPUHandler"), require("TankHash"), require("EnchantHash"), require("ItemTransfer"), require("METransfer"), require("status");
 local Exchanger = {};
 Exchanger.__index = Exchanger;
 local ench_hash, tank_hash = EnchantHash:new(), TankHash:new();
@@ -21,8 +21,8 @@ local recipe = {
 function Exchanger:new(player)
 	local obj = {
 		player = player,
-		pim0 = ItemTransfer:new(player);
-		me0 = METransfer:new(player);
+		pim0 = ItemTransfer:new(player),
+		me0 = METransfer:new(player)
 	}
 	setmetatable(obj, self)
 	return obj;
@@ -55,6 +55,7 @@ end
 
 function Exchanger:trade(index)
 	index = index or 1;
+	Logger:log("Exchanger | Player: " .. self.player .. " item index: " .. tostring(index));
 	local chosen = recipe[index];
 	local p00, p01, p02, p03, p04, p05 = self.pim0:transfer(chosen.input[1], "DOWN", 1);
 	local seal, seal_status = self.pim0.data, self.pim0.status;
@@ -64,11 +65,13 @@ function Exchanger:trade(index)
 	local tank, tank_status = self.pim0.data, self.pim0.status;
 	if (seal_status == status.success and book_status == status.success and tank_status == status.success) then
 		self.me0:transfer(chosen.output[1], "UP", 1);
-		self.me0:transfer(chosen.output[2], "UP", tank.qty)
+		self.me0:transfer(chosen.output[2], "UP", tank.qty);
+		Logger:log("Exchanger | Player: " .. self.player .. " success");
 	else
 		local m0 = self.me0:transfer(seal.fingerprint, "UP", seal.qty);	
 		local m1 = self.me0:transfer(book.fingerprint, "UP", book.qty);
 		local m2 = self.me0:transfer(tank.fingerprint, "UP", tank.qty);
+		Logger:log("Exchanger | Player: " .. self.player .. " rollback " .. tostring(seal.qty) .. " " .. tostring(book.qty) .. " " .. tostring(tank.qty));
 	end
 end
 

@@ -25,7 +25,7 @@ function TankHash:update()
 				for j = 1, #reference do
 					if (tank.name == reference[j].name) then
 						self[j].nbt_hash = me.getAvailableItems()[i].fingerprint.nbt_hash;
-						break
+						break;
 					end
 				end
 			end

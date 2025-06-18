@@ -1,8 +1,7 @@
-local component, handler, Exchanger, event, thread, computer = require("component"), require("GPUHandler"), require("Exchanger"), require("event"), require("thread"), require("computer");
+local component, Logger, handler, Exchanger, event, computer, fs = require("component"), require("Logger"), require("GPUHandler"), require("Exchanger"), require("event"), require("computer"), require("filesystem");
 local pim, gpu = component.pim, component.gpu;
 local isRunning = true;
 local mainThreads = {};
-
 local current_player = "";
 local s0 = handler:new();
 local ex0 = nil;
@@ -40,9 +39,11 @@ function login(player)
 	computer.addUser(player);
 	s0:drawMain(player);
 	s0:setButtonsState(true);
+	Logger:log("Main | Login: " .. player);
 end
 
 function logout()
+	Logger:log("Main | Logout: " .. current_player);
 	clearUsers();
 	current_player = "";
 	s0:drawWaiting();
@@ -63,6 +64,7 @@ while (isRunning) do
 			ind = type(r) == "number" and r or ind;
 			submit = type(r) == "boolean" and r or false;
 			if (ind >= 1 and ind <= 4) then
+				Logger:log("Main | Chosen index: " .. tostring(ind))
 				if (submit) then 
 					ex0:trade(ind);
 				end 
@@ -71,3 +73,5 @@ while (isRunning) do
 		end
 	end
 end
+
+Logger:close();
