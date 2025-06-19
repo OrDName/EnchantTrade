@@ -1,12 +1,20 @@
 local component, status = require("component"), require("status");
-local pim, me = component.pim, component.me_interface;
+local pim = component.pim;
 local METransfer = {};
 METransfer.__index = METransfer;
 
-function METransfer:new(player)
+function METransfer:new(player, address)
+	if (type(address) ~= "string") then
+		return nil;
+	end
+	local me_interface = component.proxy(address);
+	if (not me_interface) then
+		return nil;
+	end
 	local obj = {
 		player = player,
 		status = status.init,
+		me = me_interface;
 		data = {
 			fingerprint = nil,
 			qty = 0
@@ -43,7 +51,7 @@ function METransfer:transfer(fingerprint, direction, qty)
 				self.status = status.fail;
 				return "Wrong user! Expected: " .. self.player .. ", got: " .. name;
 			end
-			return me.exportItem(fingerprint, direction, tmp);
+			return self.me.exportItem(fingerprint, direction, tmp);
 		end);
 		if (not b or type(result) ~= "table") then
 			break;

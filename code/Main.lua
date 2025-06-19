@@ -58,12 +58,13 @@ end
 
 while (isRunning) do
 	local ev = {computer.pullSignal(0)};
-	if (ev[1] ~= "player_on" and ev[1] == "player_off" and pim.getInventoryName() == "pim") then
+	local name = pim.getInventoryName();
+	if (ev[1] ~= "player_on" and ev[1] == "player_off" and name == "pim") then
 		s0:drawWaiting();
 		os.sleep(0.5);
 	else
 		-- if (pim.getInventoryName() == ev[2]) then
-		login(ev[2])
+		login(name);
 		-- end
 	end
 	if (ev[1] == "touch") then
