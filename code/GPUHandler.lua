@@ -108,6 +108,14 @@ function GPUHandler:drawButtons()
 	end
 end
 
+function GPUHandler:drawButtonsActive(active)
+	for i, button in pairs(self.buttons) do
+		button:setEnabled(true);
+		button:setActive(active);
+		self:drawButton(button.x0, button.y0, button.label, button:getActive())
+	end
+end
+
 function GPUHandler:handleTouch(x, y)
 	for i, button in pairs(self.buttons) do
 		if (button:check(x, y)) then
@@ -143,11 +151,6 @@ function GPUHandler:setButtonsState(b)
 	for i, button in pairs(self.buttons) do
 		button:setEnabled(b);
 	end
-end
-
-function GPUHandler:setButtonAndRedraw(b)
-	self:setButtonsState(b);
-	self:drawButtons();
 end
 
 function GPUHandler:drawWaiting()

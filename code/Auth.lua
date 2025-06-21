@@ -40,6 +40,7 @@ function Auth:deauth()
 	for i, user in pairs(list) do
 		computer.removeUser(user);
 	end
+	GPUHandler:setButtonsState(false);
 	GPUHandler:drawWaiting();
 end
 
