@@ -11,6 +11,8 @@ function Auth:new()
 		conf = false,
 		main_dir = "SOUTH",
 		resv_dir = "UP",
+		me_main = "",
+		me_resv = "",
 	};
 	setmetatable(obj, self);
 	return obj;
@@ -48,6 +50,11 @@ end
 function Auth:setDir(main_dir, resv_dir)
 	self.main_dir = main_dir;
 	self.resv_dir = resv_dir;
+end
+
+function Auth:setAdd(me_main, me_resv)
+	self.me_main = me_main;
+	self.me_resv = me_resv;
 end
 
 function Auth:track(x, y, name)

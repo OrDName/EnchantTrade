@@ -18,12 +18,12 @@ local recipe = {
 	{input = {items[2], ench_hash[5], tank_hash[2], 140}, output = {ench_hash[6], tank_hash[1]}}, -- 5
 }
 
-function Exchanger:new(player)
+function Exchanger:new(player, me_main, me_resv)
 	local obj = {
 		player = player,
 		pim0 = ItemTransfer:new(player),
-		me_main = METransfer:new(player, "19e93c34-147d-4ce2-a810-accbc54e8015"),
-		me_resv = METransfer:new(player, "28b60e49-316b-4bf7-a296-b700ce275ba4"),
+		me_main = METransfer:new(player, me_main),
+		me_resv = METransfer:new(player, me_resv),
 	}
 	if (not obj.pim0 or not obj.me_main or not obj.me_resv) then
 		return nil;
