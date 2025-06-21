@@ -66,6 +66,7 @@ function Auth:track(x, y, name)
 		GPUHandler:drawItemList(input[1].name, input[2].name, input[3].name, output[1].name, 1, 1, input[4], clr0, clr1, clr2);
 		if (self.conf) then
 			self.ex0:trade(self.ind);
+			GPUHandler:drawButtonsActive(false);
 		end
 	end
 end
