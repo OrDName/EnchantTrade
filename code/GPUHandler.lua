@@ -166,6 +166,16 @@ function GPUHandler:drawLocked()
 	gpu.bitblt(0, 1, 1, w, h, self.locked, 1, 1);
 end
 
+function GPUHandler:drawItemList(item0, item1, item2, item_out, qty0, qty1, qty2, clr0, clr1, clr2)
+	self:fillConsole(1, 2, 35, 6, ' ');
+	self:writeConsole(1, 2, "Выбрано: " .. tostring(item_out));
+	self:writeConsole(1, 3, "Треубется:");
+	self:writeConsole(1, 4, "[Предмет] (Количество)");
+	self:writeConsole(1, 5, "- " .. tostring(item0) .. " (" .. tostring(qty0) .. ")", clr0);
+	self:writeConsole(1, 6, "- " .. tostring(item1) .. " (" .. tostring(qty1) .. ")", clr1);
+	self:writeConsole(1, 7, "- " .. tostring(item2) .. " (" .. tostring(qty2) .. ")", clr2);
+end
+
 function GPUHandler:initBuffers()
 	self.button_a = gpu.allocateBuffer(bw, bh);
 	l_drawTempButton(1, 1, 18, 3, true);

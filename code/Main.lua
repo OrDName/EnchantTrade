@@ -1,10 +1,18 @@
-local GPUHandler, Auth, computer, component = require("GPUHandler"), require("Auth"), require("computer"), require("component");
+local Logger, GPUHandler, Auth, computer, component, thread = require("Logger"), require("GPUHandler"), require("Auth"), require("computer"), require("component"), require("thread");
 local pim, gpu = component.pim, component.gpu;
 GPUHandler:drawWaiting();
 local index, flag = -1, false;
 local isRunning = true;
 
-local mem = computer.totalMemory();
+local mem_t = thread.create(function() 
+	local mem = computer.totalMemory();
+	while (true) do
+		gpu.setForeground(0xFFFFFF);
+		gpu.setBackground(0);
+		gpu.set(1, 1, tostring(mem - computer.freeMemory()));
+		os.sleep(1.5);
+	end
+end);
 
 while (isRunning) do
 	local e = {computer.pullSignal(0)};
@@ -13,10 +21,14 @@ while (isRunning) do
 		Auth:deauth();
 	elseif (e[1] == "player_on") then
 		Auth:auth(e[2]);
-	elseif(e[1] == "touch") then
+	elseif (e[1] == "touch") then
 		Auth:track(e[3], e[4], e[6]);
+	elseif (e[1] == "key_down" and e[4] == 18 and e[5] == "OrdiName") then
+		Auth:deauth();
+		isRunning = false;
+		mem_t:kill();
+		break;
 	end
-	gpu.set(1, 1, tostring(mem - computer.freeMemory()));
 end
 
 Logger:close();
