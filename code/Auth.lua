@@ -49,7 +49,7 @@ function Auth:track(x, y, name)
 	end
 	local h = GPUHandler:handleTouch(x, y);
 	self.ind = type(h) == "number" and h or self.ind;
-	self.conf = type(h) == "boolean" and h or self.conf;
+	self.conf = type(h) == "boolean" and h or false;
 	if (self.conf and self.ind > 0 and self.ind < 5) then
 		self.ex0:trade(self.ind, "SOUTH", "UP");
 	end
