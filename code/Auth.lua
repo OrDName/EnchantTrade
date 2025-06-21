@@ -1,7 +1,7 @@
 local Logger, GPUHandler, Exchanger, computer, component, METransfer = require("Logger"), require("GPUHandler"), require("Exchanger"), require("computer"), require("component"), require("METransfer");
+local pim = component.pim;
 local Auth = {};
 Auth.__index = Auth;
-local pim = component.pim;
 
 function Auth:new()
 	local obj = {
