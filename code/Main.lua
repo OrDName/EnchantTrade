@@ -1,5 +1,6 @@
-local Auth, computer, component = require("Auth"), require("computer"), require("component");
+local GPUHandler, Auth, computer, component = require("GPUHandler"), require("Auth"), require("computer"), require("component");
 local pim = component.pim;
+GPUHandler:drawWaiting();
 
 while (true) do
 	local e = {computer.pullSignal(0)};

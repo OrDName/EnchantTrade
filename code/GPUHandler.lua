@@ -208,7 +208,7 @@ function GPUHandler:init()
 	self:initBuffers();
 	self:initButtons();
 end
-
+--
 local instance = GPUHandler:new();
 instance:init();
 return instance;
