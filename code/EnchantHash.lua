@@ -1,5 +1,5 @@
-local component = require("component");
-local me = component.proxy("19e93c34-147d-4ce2-a810-accbc54e8015");
+local component, config = require("component"), require("config");
+local me = component.proxy(config.me_main);
 local EnchantHash = {};
 EnchantHash.__index = EnchantHash;
 
@@ -12,7 +12,7 @@ local reference = {
 	{name = "enchantment.lootBonusDigger", id = 35, lvl = 5}
 }
 
-function EnchantHash:new() 
+function EnchantHash:new()
 	obj = {
 		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Добыча III"}, -- Loot 3
 		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Добыча IV"}, -- 4

@@ -1,5 +1,5 @@
-local component = require("component");
-local me = component.proxy("19e93c34-147d-4ce2-a810-accbc54e8015");
+local component, config = require("component"), require("config");
+local me = component.proxy(config.me_main);
 local TankHash = {};
 TankHash.__index = TankHash;
 
@@ -8,7 +8,7 @@ local reference = {
 	{name = "xpjuice"}
 }
 
-function TankHash:new() 
+function TankHash:new()
 	obj = {
 		{id = "OpenBlocks:tank", dmg = 0.0, nbt_hash = "", name = "Резервуар"}, --Empty OB tank
 		{id = "OpenBlocks:tank", dmg = 0.0, nbt_hash = "", name = "Резервуар (Жидкий опыт)"} -- Xp OB tank

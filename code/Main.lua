@@ -2,12 +2,7 @@ local Logger, GPUHandler, Auth, computer, component, thread = require("Logger"),
 local pim, gpu = component.pim, component.gpu;
 local index, flag = -1, false;
 local isRunning = true;
-local main_dir, resv_dir = "SOUTH", "UP";
-local main_me, resv_me = "", "";
 GPUHandler:drawWaiting();
-
-Auth:setDir(main_dir, resv_dir);
-Auth:setAdd(main_me, resv_me);
 
 local mem_t = thread.create(function() 
 	local mem = computer.totalMemory();

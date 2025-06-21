@@ -9,10 +9,6 @@ function Auth:new()
 		ex0 = nil,
 		ind = -1,
 		conf = false,
-		main_dir = "SOUTH",
-		resv_dir = "UP",
-		me_main = "",
-		me_resv = "",
 	};
 	setmetatable(obj, self);
 	return obj;
@@ -47,16 +43,6 @@ function Auth:deauth()
 	GPUHandler:drawWaiting();
 end
 
-function Auth:setDir(main_dir, resv_dir)
-	self.main_dir = main_dir;
-	self.resv_dir = resv_dir;
-end
-
-function Auth:setAdd(me_main, me_resv)
-	self.me_main = me_main;
-	self.me_resv = me_resv;
-end
-
 function Auth:track(x, y, name)
 	if (name ~= self.player) then
 		return;
@@ -78,7 +64,7 @@ function Auth:track(x, y, name)
 			qty2 >= input[4] and 0x00FF00 or 0xFF0000;
 		GPUHandler:drawItemList(input[1].name, input[2].name, input[3].name, output[1].name, 1, 1, input[4], clr0, clr1, clr2);
 		if (self.conf) then
-			self.ex0:trade(self.ind, self.main_dir, self.resv_dir);
+			self.ex0:trade(self.ind);
 		end
 	end
 end
