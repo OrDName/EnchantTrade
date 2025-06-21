@@ -153,6 +153,12 @@ function GPUHandler:setButtonsState(b)
 	end
 end
 
+function GPUHandler:setButtonsActive(b)
+	for i, button in pairs(self.buttons) do
+		button:setActive(b);
+	end
+end
+
 function GPUHandler:drawWaiting()
 	gpu.fill(1, 1, w, h, ' ');
 	os.sleep(0.1)

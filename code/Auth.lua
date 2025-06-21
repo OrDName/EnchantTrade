@@ -16,6 +16,7 @@ end
 
 function Auth:auth(name)
 	GPUHandler:drawLoading();
+	GPUHandler:setButtonsActive(false);
 	computer.addUser(name);
 	self.player = name;
 	self.ex0 = Exchanger:new(name);
