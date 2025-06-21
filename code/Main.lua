@@ -4,8 +4,10 @@ GPUHandler:drawWaiting();
 local index, flag = -1, false;
 local isRunning = true;
 local main_dir, resv_dir = "SOUTH", "UP";
+local main_me, resv_me = "", "";
 
 Auth:setDir(main_dir, resv_dir);
+
 
 local mem_t = thread.create(function() 
 	local mem = computer.totalMemory();
