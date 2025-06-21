@@ -54,10 +54,12 @@ function Auth:track(x, y, name)
 		local recipe = self.ex0:getRecipe()[self.ind];
 		local input = recipe.input;
 		local output = recipe.output;
-		local qty0, qty1, qty2 = self.ex0:findAll(input[1]), 
+		local qty0, qty1, qty2 = 
+			self.ex0:findAll(input[1]), 
 			self.ex0:findAll(input[2]), 
 			self.ex0:findAll(input[3]);
-		local cl0, clr1, clr2 = qty0 >= 1 and 0x00FF00 or 0xFF0000, 
+		local clr0, clr1, clr2 = 
+			qty0 >= 1 and 0x00FF00 or 0xFF0000, 
 			qty1 >= 1 and 0x00FF00 or 0xFF0000, 
 			qty2 >= input[4] and 0x00FF00 or 0xFF0000;
 		GPUHandler:drawItemList(input[1].name, input[2].name, input[3].name, output[1].name, 1, 1, input[4], clr0, clr1, clr2);
