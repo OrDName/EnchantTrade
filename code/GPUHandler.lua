@@ -144,17 +144,14 @@ function GPUHandler:setButtonsState(b)
 end
 
 function GPUHandler:drawWaiting()
-	gpu.fill(1, 1, w, h, ' ');
 	gpu.bitblt(0, 1, 1, w, h, self.waiting, 1, 1);
 end
 
 function GPUHandler:drawLoading()
-	gpu.fill(1, 1, w, h, ' ');
 	gpu.bitblt(0, 1, 1, w, h, self.loading, 1, 1);
 end
 
 function GPUHandler:drawMain(player)
-	gpu.fill(1, 1, w, h, ' ');
 	gpu.bitblt(0, 1, 1, w, h, self.main, 1, 1);
 	gpu.bitblt(0, 26, 3, 35, 11, self.console, 1, 1);
 	self:writeConsole(1, 1, "Игрок: " .. player);
@@ -162,7 +159,6 @@ function GPUHandler:drawMain(player)
 end
 
 function GPUHandler:drawLocked()
-	gpu.fill(1, 1, w, h, ' ');
 	gpu.bitblt(0, 1, 1, w, h, self.locked, 1, 1);
 end
 
