@@ -22,7 +22,6 @@ function Auth:auth(name)
 	if (not b) then 
 		self:deauth();
 	else
-		-- self.ex0:updateHash(); --20-60 tick cost
 		GPUHandler:drawMain(self.player);
 	end
 	return b;
