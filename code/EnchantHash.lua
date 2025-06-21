@@ -25,6 +25,10 @@ function EnchantHash:new()
 	return obj;
 end
 
+function EnchantHash:getReference()
+	return reference;
+end
+
 function EnchantHash:update()
 	for i, item in pairs(me.getItemsInNetwork()) do
 		if (item) then

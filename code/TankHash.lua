@@ -17,6 +17,10 @@ function TankHash:new()
 	return obj;
 end
 
+function TankHash:getReference()
+	return reference;
+end
+
 function TankHash:update()
 	for i, item in pairs(me.getItemsInNetwork()) do
 		if (item) then

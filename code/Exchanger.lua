@@ -57,8 +57,27 @@ function Exchanger:getTank()
 	return tank_hash;
 end
 
-function Exchanger:validate()
-	return true;
+local function compareItems(item0, item1)
+	return item0.id == item1.id and item0.dmg == item1.dmg and item0.nbt_hash == item1.nbt_hash;
+end
+
+function Exchanger:validate(f)
+	local me = self.me_resv.me;
+	local b = {false, false, false};
+	for i, item in pairs(me.getAvailableItems()) do
+		if (b[1] and b[2] and b[3]) then
+			break;
+		end
+		if (item) then
+			for j = 1, 3 do
+				if (compareItems(item, f[j].fingerprint) and item.size == f[j].qty) then
+					b[j] = true;
+					break;
+				end
+			end
+		end
+	end
+	return b[1] and b[2] and b[3];
 end
 
 function Exchanger:trade(index, main_dir, resv_dir)
@@ -71,7 +90,7 @@ function Exchanger:trade(index, main_dir, resv_dir)
 	local book, book_status = self.pim0.data, self.pim0.status;
 	local p20, p21, p22, p23, p24, p25 = self.pim0:transfer(chosen.input[3], "DOWN", chosen.input[4]);
 	local tank, tank_status = self.pim0.data, self.pim0.status;
-	if (seal_status == status.success and book_status == status.success and tank_status == status.success and self:validate()) then
+	if (seal_status == status.success and book_status == status.success and tank_status == status.success and self:validate({seal, book, tank})) then
 		self.me_main:transfer(chosen.output[1], main_dir, 1);
 		self.me_main:transfer(chosen.output[2], main_dir, tank.qty);
 		Logger:log("Exchanger | Player: " .. self.player .. " success");
