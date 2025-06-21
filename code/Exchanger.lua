@@ -22,8 +22,12 @@ function Exchanger:new(player)
 	local obj = {
 		player = player,
 		pim0 = ItemTransfer:new(player),
-		me0 = METransfer:new(player)
+		me_main = METransfer:new(player, "19e93c34-147d-4ce2-a810-accbc54e8015"),
+		me_resv = METransfer:new(player, "28b60e49-316b-4bf7-a296-b700ce275ba4"),
 	}
+	if (not pim0 or not me_main or not me_resv) then
+		return nil;
+	end
 	setmetatable(obj, self)
 	return obj;
 end
@@ -51,6 +55,10 @@ end
 
 function Exchanger:getTank()
 	return tank_hash;
+end
+
+function Exchanger:validate()
+
 end
 
 function Exchanger:trade(index)
