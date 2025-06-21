@@ -70,7 +70,7 @@ function Exchanger:validate(f)
 		end
 		if (item) then
 			for j = 1, 3 do
-				if (compareItems(item, f[j].fingerprint) and item.size == f[j].qty) then
+				if (compareItems(item.fingerprint, f[j].fingerprint) and item.size == f[j].qty) then
 					b[j] = true;
 					break;
 				end
