@@ -1,8 +1,10 @@
 local GPUHandler, Auth, computer, component = require("GPUHandler"), require("Auth"), require("computer"), require("component");
-local pim = component.pim;
+local pim, gpu = component.pim, component.gpu;
 GPUHandler:drawWaiting();
 local index, flag = -1, false;
 local isRunning = true;
+
+local mem = computer.totalMemory();
 
 while (isRunning) do
 	local e = {computer.pullSignal(0)};
@@ -14,6 +16,7 @@ while (isRunning) do
 	elseif(e[1] == "touch") then
 		Auth:track(e[3], e[4], e[6]);
 	end
+	gpu.set(1, 1, tostring(mem - computer.freeMemory()));
 end
 
 Logger:close();

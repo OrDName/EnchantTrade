@@ -75,6 +75,9 @@ function Exchanger:trade(index, main_dir, resv_dir)
 		self.me_main:transfer(chosen.output[1], main_dir, 1);
 		self.me_main:transfer(chosen.output[2], main_dir, tank.qty);
 		Logger:log("Exchanger | Player: " .. self.player .. " success");
+		self.me_resv:transfer(seal.fingerprint, "DOWN", seal.qty);
+		self.me_resv:transfer(book.fingerprint, "DOWN", book.qty);
+		self.me_resv:transfer(tank.fingerprint, "DOWN", tank.qty);
 	else
 		local m0 = self.me_resv:transfer(seal.fingerprint, resv_dir, seal.qty);	
 		local m1 = self.me_resv:transfer(book.fingerprint, resv_dir, book.qty);

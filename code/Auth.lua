@@ -1,4 +1,4 @@
-local GPUHandler, Exchanger, computer, component, METransfer = require("GPUHandler"), require("Exchanger"), require("computer"), require("component"), require("METransfer");
+local Logger, GPUHandler, Exchanger, computer, component, METransfer = require("Logger"), require("GPUHandler"), require("Exchanger"), require("computer"), require("component"), require("METransfer");
 local Auth = {};
 Auth.__index = Auth;
 local pim = component.pim;
@@ -24,12 +24,14 @@ function Auth:auth(name)
 	if (not b) then
 		self:deauth();
 	else
+		Logger:log("Auth " .. tostring(self.player));
 		GPUHandler:drawMain(self.player);
 	end
 	return b;
 end
 
 function Auth:deauth()
+	Logger:log("Deauth " .. tostring(self.player));
 	self.player = "";
 	self.ex0 = nil;
 	self.ind = -1;
