@@ -1,10 +1,10 @@
 local Logger, GPUHandler, Auth, computer, component, thread = require("Logger"), require("GPUHandler"), require("Auth"), require("computer"), require("component"), require("thread");
 local pim, gpu = component.pim, component.gpu;
-GPUHandler:drawWaiting();
 local index, flag = -1, false;
 local isRunning = true;
 local main_dir, resv_dir = "SOUTH", "UP";
 local main_me, resv_me = "", "";
+GPUHandler:drawWaiting();
 
 Auth:setDir(main_dir, resv_dir);
 Auth:setAdd(main_me, resv_me);
