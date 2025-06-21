@@ -9,6 +9,7 @@ while (true) do
 		print("d");
 	elseif (e[1] == "player_on") then
 		print("a");
+		os.sleep(1)
 		Auth:auth(e[2]);	
 	end
 end

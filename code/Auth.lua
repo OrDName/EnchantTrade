@@ -23,6 +23,7 @@ function Auth:auth(name)
 		self:deauth();
 	else
 		GPUHandler:drawMain(self.player);
+		os.sleep(5);
 	end
 	return b;
 end
