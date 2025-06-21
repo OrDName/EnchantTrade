@@ -1,4 +1,4 @@
-local GPUHandler, Exchanger, computer, component = require("GPUHandler"), require("Exchanger"), require("computer"), require("component");
+local GPUHandler, Exchanger, computer, component, METransfer = require("GPUHandler"), require("Exchanger"), require("computer"), require("component"), require("METransfer");
 local Auth = {};
 Auth.__index = Auth;
 local pim = component.pim;
@@ -19,11 +19,10 @@ function Auth:auth(name)
 	self.ex0 = Exchanger:new(name);
 	os.sleep(1);
 	local b = name == pim.getInventoryName() and self.ex0;
-	if (not b) then 
+	if (not b) then
 		self:deauth();
 	else
 		GPUHandler:drawMain(self.player);
-		os.sleep(5);
 	end
 	return b;
 end

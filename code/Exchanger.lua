@@ -25,7 +25,7 @@ function Exchanger:new(player)
 		me_main = METransfer:new(player, "19e93c34-147d-4ce2-a810-accbc54e8015"),
 		me_resv = METransfer:new(player, "28b60e49-316b-4bf7-a296-b700ce275ba4"),
 	}
-	if (not pim0 or not me_main or not me_resv) then
+	if (not obj.pim0 or not obj.me_main or not obj.me_resv) then
 		return nil;
 	end
 	setmetatable(obj, self)

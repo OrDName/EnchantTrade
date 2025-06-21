@@ -32,7 +32,7 @@ function METransfer:resetData()
 end
 
 function METransfer:__tostring()
-	return "player: " .. self.player .. ",	status: " .. self.status;
+	return "player: " .. tostring(self.player) .. ",	status: " .. tostring(self.status);
 end
 
 function METransfer:transfer(fingerprint, direction, qty)
