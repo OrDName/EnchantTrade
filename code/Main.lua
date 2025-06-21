@@ -8,6 +8,8 @@ while (true) do
 	if (e[1] ~= "player_on" and e[1] == "player_off" and Auth.player ~= pim.getInventoryName()) then
 		Auth:deauth();
 	elseif (e[1] == "player_on") then
-		Auth:auth(e[2]);	
+		if(Auth:auth(e[2])) then 
+			Auth:track();
+		end	
 	end
 end
