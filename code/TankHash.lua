@@ -1,5 +1,5 @@
 local component = require("component");
-local me = component.me_interface;
+local me = component.proxy("19e93c34-147d-4ce2-a810-accbc54e8015");
 local TankHash = {};
 TankHash.__index = TankHash;
 

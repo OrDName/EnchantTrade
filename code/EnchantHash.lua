@@ -1,5 +1,5 @@
 local component = require("component");
-local me = component.me_interface;
+local me = component.proxy("19e93c34-147d-4ce2-a810-accbc54e8015");
 local EnchantHash = {};
 EnchantHash.__index = EnchantHash;
 
@@ -19,7 +19,7 @@ function EnchantHash:new()
 		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Добыча V"}, -- 5
 		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Удача III"}, --Luck 3
 		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Удача IV"}, -- 4
-		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Удача V"} -- 5
+		{id = "minecraft:enchanted_book", dmg = 0.0, nbt_hash = "", name = "Удача V"} -- 5d
 	}
 	setmetatable(obj, self);
 	return obj;

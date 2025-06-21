@@ -58,10 +58,10 @@ function Exchanger:getTank()
 end
 
 function Exchanger:validate()
-
+	return true;
 end
 
-function Exchanger:trade(index)
+function Exchanger:trade(index, main_dir, resv_dir)
 	index = index or 1;
 	Logger:log("Exchanger | Player: " .. self.player .. " item index: " .. tostring(index));
 	local chosen = recipe[index];
@@ -71,14 +71,14 @@ function Exchanger:trade(index)
 	local book, book_status = self.pim0.data, self.pim0.status;
 	local p20, p21, p22, p23, p24, p25 = self.pim0:transfer(chosen.input[3], "DOWN", chosen.input[4]);
 	local tank, tank_status = self.pim0.data, self.pim0.status;
-	if (seal_status == status.success and book_status == status.success and tank_status == status.success) then
-		self.me0:transfer(chosen.output[1], "UP", 1);
-		self.me0:transfer(chosen.output[2], "UP", tank.qty);
+	if (seal_status == status.success and book_status == status.success and tank_status == status.success and self:validate()) then
+		self.me_main:transfer(chosen.output[1], main_dir, 1);
+		self.me_main:transfer(chosen.output[2], main_dir, tank.qty);
 		Logger:log("Exchanger | Player: " .. self.player .. " success");
 	else
-		local m0 = self.me0:transfer(seal.fingerprint, "UP", seal.qty);	
-		local m1 = self.me0:transfer(book.fingerprint, "UP", book.qty);
-		local m2 = self.me0:transfer(tank.fingerprint, "UP", tank.qty);
+		local m0 = self.me_resv:transfer(seal.fingerprint, resv_dir, seal.qty);	
+		local m1 = self.me_resv:transfer(book.fingerprint, resv_dir, book.qty);
+		local m2 = self.me_resv:transfer(tank.fingerprint, resv_dir, tank.qty);
 		Logger:log("Exchanger | Player: " .. self.player .. " rollback " .. tostring(seal.qty) .. " " .. tostring(book.qty) .. " " .. tostring(tank.qty));
 	end
 end

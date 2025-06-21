@@ -7,6 +7,8 @@ function Auth:new()
 	local obj = {
 		player = "",
 		ex0 = nil,
+		ind = -1,
+		conf = false,
 	};
 	setmetatable(obj, self);
 	return obj;
@@ -30,11 +32,25 @@ end
 function Auth:deauth()
 	self.player = "";
 	self.ex0 = nil;
+	self.ind = -1;
+	self.conf = false;
 	local list = {computer.users()};
 	for i, user in pairs(list) do
 		computer.removeUser(user);
 	end
 	GPUHandler:drawWaiting();
+end
+
+function Auth:track(x, y, name)
+	if (name ~= self.player) then
+		return;
+	end
+	local h = GPUHandler:handleTouch(x, y);
+	self.ind = type(h) == "number" and h or self.ind;
+	self.conf = type(h) == "boolean" and h or self.conf;
+	if (self.conf and self.ind > 0 and self.ind < 5) then
+		self.ex0:trade(self.ind, "SOUTH", "UP");
+	end
 end
 
 local o = Auth:new();
