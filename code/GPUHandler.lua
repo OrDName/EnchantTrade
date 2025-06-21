@@ -210,4 +210,5 @@ function GPUHandler:init()
 end
 
 local instance = GPUHandler:new();
+instance:init();
 return instance;
