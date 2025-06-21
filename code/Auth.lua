@@ -38,14 +38,10 @@ function Auth:deauth()
 end
 
 function Auth:track()
-	while (true) do
+	while (self.player == pim.getInventoryName()) do
 		local e = {computer.pullSignal(0)};
 		if (e[1] == "touch") then
 			local name, x, y = e[6], e[3], e[4]; 
-			if (name ~= self.player and name == pim.getInventoryName()) then
-				self:deauth();
-				self:auth(name);
-			end	
 			print(GPUHandler:handleTouch(x, y));
 		end
 	end
