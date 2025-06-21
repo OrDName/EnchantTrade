@@ -1,4 +1,4 @@
-local GPUHandler, Exchanger, component = require("GPUHandler"), require("Exchanger"), require("component");
+local GPUHandler, Exchanger, computer, component = require("GPUHandler"), require("Exchanger"), require("computer"), require("component");
 local Auth = {};
 Auth.__index = Auth;
 local pim = component.pim;
