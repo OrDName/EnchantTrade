@@ -93,6 +93,8 @@ function GPUHandler:drawButton(x, y, str, isActive)
 	local offset = math.ceil((bw - unicode.wlen(str)) / 2);
 	local index = isActive and self.button_a or self.button_d;
 	local clr = isActive and 0x446644 or 0x222222;
+	gpu.fill(x, y, bw, bh, ' ');
+	os.sleep();
 	gpu.bitblt(0, x, y, bw, bh, index, 1, 1);
 	gpu.setForeground(0xFFFFFF)
 	gpu.setBackground(clr);
@@ -143,15 +145,26 @@ function GPUHandler:setButtonsState(b)
 	end
 end
 
+function GPUHandler:setButtonAndRedraw(b)
+	self:setButtonsState(b);
+	self:drawButtons();
+end
+
 function GPUHandler:drawWaiting()
+	gpu.fill(1, 1, w, h, ' ');
+	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.waiting, 1, 1);
 end
 
 function GPUHandler:drawLoading()
+	gpu.fill(1, 1, w, h, ' ');
+	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.loading, 1, 1);
 end
 
 function GPUHandler:drawMain(player)
+	gpu.fill(1, 1, w, h, ' ');
+	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.main, 1, 1);
 	gpu.bitblt(0, 26, 3, 35, 11, self.console, 1, 1);
 	self:writeConsole(1, 1, "Игрок: " .. player);
@@ -173,27 +186,42 @@ function GPUHandler:drawItemList(item0, item1, item2, item_out, qty0, qty1, qty2
 end
 
 function GPUHandler:initBuffers()
+	gpu.fill(1, 1, w, h, ' ');
 	self.button_a = gpu.allocateBuffer(bw, bh);
 	l_drawTempButton(1, 1, 18, 3, true);
 	gpu.bitblt(self.button_a, 1, 1, bw, bh, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.button_d = gpu.allocateBuffer(bw, bh);
 	l_drawTempButton(1, 1, 18, 3, false);
 	gpu.bitblt(self.button_d, 1, 1, bw, bh, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.waiting = gpu.allocateBuffer(w, h);
 	l_drawWaiting();
 	gpu.bitblt(self.waiting, 1, 1, w, h, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.loading = gpu.allocateBuffer(w, h);
 	l_drawLoading();
 	gpu.bitblt(self.loading, 1, 1, w, h, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.main = gpu.allocateBuffer(w, h);
 	l_drawMain();
 	gpu.bitblt(self.main, 1, 1, w, h, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.locked = gpu.allocateBuffer(w, h);
 	l_drawLocked();
 	gpu.bitblt(self.locked, 1, 1, w, h, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 	self.console = gpu.allocateBuffer(w, h);
 	l_drawConsole(1, 1);
 	gpu.bitblt(self.console, 1, 1, 35, 11, 0, 1, 1);
+	os.sleep(0.5);
+	gpu.fill(1, 1, w, h, ' ');
 end
 
 function GPUHandler:initButtons()
