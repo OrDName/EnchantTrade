@@ -8,8 +8,9 @@ while (true) do
 	if (e[1] ~= "player_on" and e[1] == "player_off" and Auth.player ~= pim.getInventoryName()) then
 		Auth:deauth();
 	elseif (e[1] == "player_on") then
-		if(Auth:auth(e[2])) then 
-			Auth:track();
-		end	
+		Auth:auth(e[2])
+	elseif(e[1] == "touch" and e[6] == Auth.player) then
+		local x, y = e[3], e[4]; 
+		print(GPUHandler:handleTouch(x, y));
 	end
 end
