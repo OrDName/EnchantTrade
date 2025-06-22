@@ -77,7 +77,7 @@ function GPUHandler:new()
 			locked = 0,
 			console = 0,
 			button_a = 0,
-			button_d = 0
+			button_d = 0,
 		},
 		buttons = {}
 	};
@@ -160,20 +160,14 @@ function GPUHandler:setButtonsActive(b)
 end
 
 function GPUHandler:drawWaiting()
-	gpu.fill(1, 1, w, h, ' ');
-	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.waiting, 1, 1);
 end
 
 function GPUHandler:drawLoading()
-	gpu.fill(1, 1, w, h, ' ');
-	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.loading, 1, 1);
 end
 
 function GPUHandler:drawMain(player)
-	gpu.fill(1, 1, w, h, ' ');
-	os.sleep(0.1)
 	gpu.bitblt(0, 1, 1, w, h, self.main, 1, 1);
 	gpu.bitblt(0, 26, 3, 35, 11, self.console, 1, 1);
 	self:writeConsole(1, 1, "Игрок: " .. player);
@@ -197,40 +191,27 @@ end
 function GPUHandler:initBuffers()
 	gpu.fill(1, 1, w, h, ' ');
 	self.button_a = gpu.allocateBuffer(bw, bh);
+	gpu.setActiveBuffer(self.button_a);
 	l_drawTempButton(1, 1, 18, 3, true);
-	gpu.bitblt(self.button_a, 1, 1, bw, bh, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.button_d = gpu.allocateBuffer(bw, bh);
+	gpu.setActiveBuffer(self.button_b);
 	l_drawTempButton(1, 1, 18, 3, false);
-	gpu.bitblt(self.button_d, 1, 1, bw, bh, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.waiting = gpu.allocateBuffer(w, h);
+	gpu.setActiveBuffer(self.waiting);
 	l_drawWaiting();
-	gpu.bitblt(self.waiting, 1, 1, w, h, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.loading = gpu.allocateBuffer(w, h);
+	gpu.setActiveBuffer(self.loading);
 	l_drawLoading();
-	gpu.bitblt(self.loading, 1, 1, w, h, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.main = gpu.allocateBuffer(w, h);
+	gpu.setActiveBuffer(self.main);
 	l_drawMain();
-	gpu.bitblt(self.main, 1, 1, w, h, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.locked = gpu.allocateBuffer(w, h);
+	gpu.setActiveBuffer(self.locked);
 	l_drawLocked();
-	gpu.bitblt(self.locked, 1, 1, w, h, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
 	self.console = gpu.allocateBuffer(w, h);
+	gpu.setActiveBuffer(self.console);
 	l_drawConsole(1, 1);
-	gpu.bitblt(self.console, 1, 1, 35, 11, 0, 1, 1);
-	os.sleep(0.5);
-	gpu.fill(1, 1, w, h, ' ');
+	gpu.setActiveBuffer(0);
 end
 
 function GPUHandler:initButtons()
@@ -242,6 +223,7 @@ function GPUHandler:initButtons()
 end
 
 function GPUHandler:init()
+	gpu.setActiveBuffer(0);
 	gpu.freeAllBuffers();
 	gpu.setResolution(w, h);
 	local mem = gpu.freeMemory();
