@@ -17,68 +17,11 @@ local function l_drawDefault(bg_0, bg_1)
 	gpu.fill(3, 2, w - 4, h - 2, ' ');
 end
 
-local function l_drawLocked()
-	local lck_c = 0xFF0000;
-	local lck_x, lck_y = 28, 10;
-	l_drawDefault(lck_c);
-	gpu.setBackground(lck_c);
-	gpu.fill(lck_x, lck_y, 10, 5, ' ');
-	gpu.fill(lck_x + 1, lck_y - 2, 2, 2, ' ');
-	gpu.fill(lck_x + 7, lck_y - 2, 2, 2, ' ');
-	gpu.fill(lck_x + 3, lck_y - 3, 4, 1, ' ');
-	gpu.setBackground(bg1);
-	gpu.fill(lck_x + 3, lck_y + 2, 4, 1, ' ')
-	gpu.fill(lck_x + 4, lck_y + 3, 2, 1, ' ');
-end
-
-local function l_drawWaiting()
-	l_drawDefault(0xFFFF00)
-	gpu.setBackground(w8_clr1);
-	gpu.fill(w8_x, w8_y, w8_w, w8_h, ' ');
-	local str = "Встаньте на PIM..."
-	gpu.setForeground(0xFFFFFF)
-	gpu.set(w8_x + (w8_w - unicode.wlen(str)) / 2, w8_y + w8_h / 2, str);
-end
-
-local function l_drawLoading()
-	l_drawDefault(0x00FF77)
-	gpu.setBackground(w8_clr1);
-	gpu.fill(w8_x, w8_y, w8_w, w8_h, ' ');
-	local str = "Загрузка"
-	gpu.setForeground(0xFFFFFF)
-	gpu.set(w8_x + (w8_w - unicode.wlen(str)) / 2, w8_y + w8_h / 2, str);
-end
-
-local function l_drawTempButton(x, y, wx, hy, isActive)
-	local clr = isActive and 0x446644 or 0x222222;
-	gpu.setBackground(clr);
-	gpu.fill(x, y, wx, hy, ' ');
-end
-
-local function l_drawConsole(x, y)
-	gpu.setBackground(0);
-	gpu.fill(x, y, w - 3 - x, h - 5 - y, ' ');
-end
-
-local function l_drawMain()
-	l_drawDefault();
-	l_drawConsole(26, 3);
-end
-
 function GPUHandler:new()
 	local obj = {
 		player = "",
 		state = 0,
 		pre = nil,
-		buffers = {
-			waiting = 0,
-			loading = 0,
-			main = 0,
-			locked = 0,
-			console = 0,
-			button_a = 0,
-			button_d = 0,
-		},
 		buttons = {}
 	};
 	setmetatable(obj, self);
@@ -91,13 +34,10 @@ end
 
 function GPUHandler:drawButton(x, y, str, isActive)
 	local offset = math.ceil((bw - unicode.wlen(str)) / 2);
-	local index = isActive and self.button_a or self.button_d;
 	local clr = isActive and 0x446644 or 0x222222;
-	gpu.fill(x, y, bw, bh, ' ');
-	os.sleep();
-	gpu.bitblt(0, x, y, bw, bh, index, 1, 1);
-	gpu.setForeground(0xFFFFFF)
 	gpu.setBackground(clr);
+	gpu.setForeground(0xFFFFFF);
+	gpu.fill(x, y, bw, bh, ' ');
 	gpu.set(x + offset, y + bh / 2, str);
 end
 
@@ -160,22 +100,43 @@ function GPUHandler:setButtonsActive(b)
 end
 
 function GPUHandler:drawWaiting()
-	gpu.bitblt(0, 1, 1, w, h, self.waiting, 1, 1);
+	l_drawDefault(0xFFFF00)
+	gpu.setBackground(w8_clr1);
+	gpu.fill(w8_x, w8_y, w8_w, w8_h, ' ');
+	local str = "Встаньте на PIM..."
+	gpu.setForeground(0xFFFFFF)
+	gpu.set(w8_x + (w8_w - unicode.wlen(str)) / 2, w8_y + w8_h / 2, str);
 end
 
 function GPUHandler:drawLoading()
-	gpu.bitblt(0, 1, 1, w, h, self.loading, 1, 1);
+	l_drawDefault(0x00FF77)
+	gpu.setBackground(w8_clr1);
+	gpu.fill(w8_x, w8_y, w8_w, w8_h, ' ');
+	local str = "Загрузка"
+	gpu.setForeground(0xFFFFFF)
+	gpu.set(w8_x + (w8_w - unicode.wlen(str)) / 2, w8_y + w8_h / 2, str);
 end
 
 function GPUHandler:drawMain(player)
-	gpu.bitblt(0, 1, 1, w, h, self.main, 1, 1);
-	gpu.bitblt(0, 26, 3, 35, 11, self.console, 1, 1);
+	l_drawDefault();
+	gpu.setBackground(0);
+	gpu.fill(26, 3, w - 29, h - 8, ' ');
 	self:writeConsole(1, 1, "Игрок: " .. player);
 	self:drawButtons();
 end
 
 function GPUHandler:drawLocked()
-	gpu.bitblt(0, 1, 1, w, h, self.locked, 1, 1);
+	local lck_c = 0xFF0000;
+	local lck_x, lck_y = 28, 10;
+	l_drawDefault(lck_c);
+	gpu.setBackground(lck_c);
+	gpu.fill(lck_x, lck_y, 10, 5, ' ');
+	gpu.fill(lck_x + 1, lck_y - 2, 2, 2, ' ');
+	gpu.fill(lck_x + 7, lck_y - 2, 2, 2, ' ');
+	gpu.fill(lck_x + 3, lck_y - 3, 4, 1, ' ');
+	gpu.setBackground(bg1);
+	gpu.fill(lck_x + 3, lck_y + 2, 4, 1, ' ')
+	gpu.fill(lck_x + 4, lck_y + 3, 2, 1, ' ');
 end
 
 function GPUHandler:drawItemList(item0, item1, item2, item_out, qty0, qty1, qty2, clr0, clr1, clr2)
@@ -188,32 +149,6 @@ function GPUHandler:drawItemList(item0, item1, item2, item_out, qty0, qty1, qty2
 	self:writeConsole(1, 7, "- " .. tostring(item2) .. " (" .. tostring(qty2) .. ")", clr2);
 end
 
-function GPUHandler:initBuffers()
-	gpu.fill(1, 1, w, h, ' ');
-	self.button_a = gpu.allocateBuffer(bw, bh);
-	gpu.setActiveBuffer(self.button_a);
-	l_drawTempButton(1, 1, 18, 3, true);
-	self.button_d = gpu.allocateBuffer(bw, bh);
-	gpu.setActiveBuffer(self.button_b);
-	l_drawTempButton(1, 1, 18, 3, false);
-	self.waiting = gpu.allocateBuffer(w, h);
-	gpu.setActiveBuffer(self.waiting);
-	l_drawWaiting();
-	self.loading = gpu.allocateBuffer(w, h);
-	gpu.setActiveBuffer(self.loading);
-	l_drawLoading();
-	self.main = gpu.allocateBuffer(w, h);
-	gpu.setActiveBuffer(self.main);
-	l_drawMain();
-	self.locked = gpu.allocateBuffer(w, h);
-	gpu.setActiveBuffer(self.locked);
-	l_drawLocked();
-	self.console = gpu.allocateBuffer(w, h);
-	gpu.setActiveBuffer(self.console);
-	l_drawConsole(1, 1);
-	gpu.setActiveBuffer(0);
-end
-
 function GPUHandler:initButtons()
 	self:createButton(6, 3, "Добыча IV ", false, 1);
 	self:createButton(6, 7, "Добыча V", false, 2);
@@ -223,17 +158,10 @@ function GPUHandler:initButtons()
 end
 
 function GPUHandler:init()
-	gpu.setActiveBuffer(0);
-	gpu.freeAllBuffers();
 	gpu.setResolution(w, h);
-	local mem = gpu.freeMemory();
-	if (mem < 24000) then
-		return;
-	end
-	self:initBuffers();
 	self:initButtons();
 end
---
+
 local instance = GPUHandler:new();
 instance:init();
 return instance;
