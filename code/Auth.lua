@@ -64,7 +64,7 @@ function Auth:track(x, y, name)
 			qty0 >= 1 and 0x00FF00 or 0xFF0000, 
 			qty1 >= 1 and 0x00FF00 or 0xFF0000, 
 			qty2 >= input[4] and 0x00FF00 or 0xFF0000;
-		GPUHandler:drawItemList(input[1].name, input[2].name, input[3].name, output[1].name, 1, 1, input[4], clr0, clr1, clr2);
+		GPUHandler:drawItemList(input[1][1].name_l, input[2][1].name_l, input[3][1].name_l, output[1][1].name_l, input[1][2], input[2][2], input[3][2], clr0, clr1, clr2);
 		if (self.conf) then
 			self.ex0:trade(self.ind);
 			GPUHandler:drawButtonsActive(false);
