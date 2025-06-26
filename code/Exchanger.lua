@@ -5,8 +5,6 @@ Exchanger.__index = Exchanger;
 local recipe = ItemHandler.getRecipe();
 local compare_pp, compare_mp = ItemHandler.compare_pp, ItemHandler.compare_mp;
 
-ItemHandler.updateHash(recipe);
-
 function Exchanger:new(player)
 	local obj = {
 		player = player,
@@ -17,6 +15,7 @@ function Exchanger:new(player)
 	if (not obj.pim0 or not obj.me_main or not obj.me_resv) then
 		return nil;
 	end
+	ItemHandler.updateHash(recipe);
 	setmetatable(obj, self)
 	return obj;
 end
