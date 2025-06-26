@@ -1,6 +1,3 @@
-local ItemHandler = {};
-ItemHandler.__index = ItemHandler;
-
 local items = {
 	{id = "dwcity:Dark_element", dmg = 0.0, name_l = "Элемент тьмы"},
 	{id = "dwcity:Power_seal", dmg = 0.0, name_l = "Печать силы"},
