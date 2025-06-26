@@ -1,3 +1,6 @@
+local ItemHandler = {};
+ItemHandler.__index = ItemHandler;
+
 local items = {
 	{id = "dwcity:Dark_element", dmg = 0.0, name_l = "Элемент тьмы"},
 	{id = "dwcity:Power_seal", dmg = 0.0, name_l = "Печать силы"},
@@ -18,7 +21,7 @@ local recipe = {
 	{input = {{items[2], 1}, {items[9], 1}, {items[4], 140}}, output = {{items[10], 1}, {items[3], 0}}}, -- 5
 }
 
-function compare_pp(i0, i1)
+function ItemHandler.compare_pp(i0, i1)
 	if (not i0.id or not i1.id or i0.id ~= i1.id or i0.dmg ~= i1.dmg) then
 		return false;
 	end
@@ -34,7 +37,7 @@ function compare_pp(i0, i1)
 	return fluid and ench;
 end
 
-function compare_mp(i0, i1)
+function ItemHandler.compare_mp(i0, i1)
 	if (not i0.name or not i1.id or i0.name ~= i1.id or i0.damage ~= i1.dmg) then
 		return false;
 	end
@@ -50,6 +53,8 @@ function compare_mp(i0, i1)
 	return fluid and ench;
 end
 
-function getRecipe()
+function ItemHandler.getRecipe()
 	return recipe;
 end
+
+return ItemHandler;
