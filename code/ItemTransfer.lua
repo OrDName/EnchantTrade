@@ -64,8 +64,9 @@ function ItemTransfer:transfer(fingerprint, direction, qty)
 	local b, result = true, nil;
 	local founded, slot = self:findItem(fingerprint);
 	self.data.fingerprint = fingerprint;
+	local item = nil;
 	while (founded and total < qty) do
-		local item = pim.getStackInSlot(slot);
+		item = pim.getStackInSlot(slot);
 		if (not item or not compare_pp(item, fingerprint)) then
 			founded, slot = self:findItem(fingerprint);
 		end
@@ -83,6 +84,9 @@ function ItemTransfer:transfer(fingerprint, direction, qty)
 		tmp = tmp - result;
 		total = total + result;
 		self.data.qty = total;
+	end
+	if (item) then
+		self.data.fingerprint.nbt_hash = item.nbt_hash;
 	end
 	self.status = total == qty and status.success or status.fail;
 	return total == qty, total, qty - total, founded, b, result;

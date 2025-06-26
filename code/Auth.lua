@@ -57,13 +57,13 @@ function Auth:track(x, y, name)
 		local input = recipe.input;
 		local output = recipe.output;
 		local qty0, qty1, qty2 = 
-			self.ex0:findAll(input[1]), 
-			self.ex0:findAll(input[2]), 
-			self.ex0:findAll(input[3]);
+			self.ex0:findAll(input[1][1]), 
+			self.ex0:findAll(input[2][1]), 
+			self.ex0:findAll(input[3][1]);
 		local clr0, clr1, clr2 = 
-			qty0 >= 1 and 0x00FF00 or 0xFF0000, 
-			qty1 >= 1 and 0x00FF00 or 0xFF0000, 
-			qty2 >= input[4] and 0x00FF00 or 0xFF0000;
+			qty0 >= input[1][2] and 0x00FF00 or 0xFF0000, 
+			qty1 >= input[2][2] and 0x00FF00 or 0xFF0000, 
+			qty2 >= input[3][2] and 0x00FF00 or 0xFF0000;
 		GPUHandler:drawItemList(input[1][1].name_l, input[2][1].name_l, input[3][1].name_l, output[1][1].name_l, input[1][2], input[2][2], input[3][2], clr0, clr1, clr2);
 		if (self.conf) then
 			self.ex0:trade(self.ind);
