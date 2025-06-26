@@ -1,6 +1,9 @@
 local ItemHandler = {};
 ItemHandler.__index = ItemHandler;
 
+local component = require("component");
+local me = component.proxy(require("config").me_main);
+
 local items = {
 	{id = "dwcity:Dark_element", dmg = 0.0, name_l = "Элемент тьмы", nbt_hash = nil},
 	{id = "dwcity:Power_seal", dmg = 0.0, name_l = "Печать силы", nbt_hash = nil},
@@ -41,6 +44,16 @@ local function compare_fluids_mp(f0, f1, i0_qty, i1_qty)
 	end
 end
 
+local function compare_fluids_mm(f0, f1, i0_qty, i1_qty)
+	if (not f0.name and not f1.name) then
+		return true;
+	elseif (f0.name and not f1.name or not f0.name and f1.name) then
+		return false;
+	elseif (f0.name and f1.name) then
+		return f0.name == f1.name and ((f0.amount / i0_qty) == (f1.amount / i1_qty));
+	end
+end
+
 function ItemHandler.compare_pp(i0, i1)
 	local i0_qty, i1_qty = i0.qty or 1, i1.qty or 1;
 	local fluid, ench = false, false;
@@ -71,6 +84,33 @@ function ItemHandler.compare_mp(i0, i1)
 		ench = (e0[1].name == e1[1].name) and (e0[1].level == e1[1].level);
 	end
 	return i0.name == i1.id and i0.damage == i1.dmg and (fluid or ench);
+end
+
+function ItemHandler.compare_mm(i0, i1)
+	local i0_qty, i1_qty = i0.size or 1, i1.size or 1;
+	local fluid, ench = false, false;
+	local f0, f1, e0, e1 = i0.fluid, i1.fluid, i0.enchantments, i1.enchantments;
+	if (not f0 and not f1 and not e0 and not e1) then
+		return i0.name == i1.name and i0.damage == i1.damage;
+	end
+	if (f0 and f1) then
+		fluid = compare_fluids_mm(f0, f1, i0_qty, i1_qty);
+	end
+	if (e0 and e1 and e0[1] and e1[1]) then
+		ench = (e0[1].name == e1[1].name) and (e0[1].level == e1[1].level);
+	end
+	return i0.name == i1.name and i0.damage == i1.damage and (fluid or ench);
+end
+
+function ItemHandler.updateHash()
+	print("UPDATING HASH");
+	for i, item in pairs(me.getAvailableItems("ALL")) do
+		for j, fing in pairs(recipe) do
+			if (ItemHandler.compare_pp(item.item, fing.output[1][1])) then
+				fing.output[1][1].nbt_hash = item.fingerprint.nbt_hash;
+			end
+		end
+	end
 end
 
 function ItemHandler.getRecipe()

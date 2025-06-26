@@ -5,6 +5,8 @@ Exchanger.__index = Exchanger;
 local recipe = ItemHandler.getRecipe();
 local compare_pp, compare_mp = ItemHandler.compare_pp, ItemHandler.compare_mp;
 
+ItemHandler.updateHash();
+
 function Exchanger:new(player)
 	local obj = {
 		player = player,
@@ -30,13 +32,13 @@ end
 function Exchanger:b3validate(f)
 	local me = self.me_resv.me;
 	local b = {false, false, false};
-	for i, item in pairs(me.getItemsInNetwork()) do
+	for i, item in pairs(me.getAvailableItems("ALL")) do
 		if (b[1] and b[2] and b[3]) then
 			break;
 		end
 		if (item) then
 			for j = 1, 3 do
-				if (compare_mp(item, f[j].fingerprint) and item.size == f[j].qty) then
+				if (compare_pp(item.item, f[j].fingerprint) and item.size == f[j].qty) then
 					b[j] = true;
 					break;
 				end
