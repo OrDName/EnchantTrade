@@ -53,7 +53,7 @@ end
 function ItemHandler.updateHash(t_r)
 	for j, fing in pairs(t_r) do
 		for i, item in pairs(me.getAvailableItems("ALL")) do
-			if (ItemHandler.compare_pp(item.item, fing.output[1][1])) then
+			if (ItemHandler.compare(item.item, fing.output[1][1])) then
 				fing.output[1][1].nbt_hash = item.fingerprint.nbt_hash;
 				break;
 			end
