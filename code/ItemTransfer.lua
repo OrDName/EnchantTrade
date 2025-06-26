@@ -3,7 +3,7 @@ local pim = component.pim;
 local ItemTransfer = {};
 ItemTransfer.__index = ItemTransfer;
 
-local compare_pp = ItemHandler.compare_pp;
+local compare = ItemHandler.compare;
 
 function ItemTransfer:new(player)
 	local obj = {
@@ -34,7 +34,7 @@ function ItemTransfer:findAll(fingerprint)
 	for i = 1, 40 do
 		local item = pim.getStackInSlot(i);
 		if (item and type(item) == "table" and fingerprint and type(fingerprint) == "table") then
-			if (compare_pp(item, fingerprint)) then
+			if (compare(item, fingerprint)) then
 				qty = qty + item.qty;
 			end
 		end
@@ -46,7 +46,7 @@ function ItemTransfer:findItem(fingerprint)
 	for i = 1, 40 do
 		local item = pim.getStackInSlot(i);
 		if (item and type(item) == "table" and fingerprint and type(fingerprint) == "table") then
-			if (compare_pp(item, fingerprint)) then
+			if (compare(item, fingerprint)) then
 				return true, i;
 			end
 		end
@@ -67,7 +67,7 @@ function ItemTransfer:transfer(fingerprint, direction, qty)
 	local item = nil;
 	while (founded and total < qty) do
 		item = pim.getStackInSlot(slot);
-		if (not item or not compare_pp(item, fingerprint)) then
+		if (not item or not compare(item, fingerprint)) then
 			founded, slot = self:findItem(fingerprint);
 		end
 		b, result = pcall(function() 

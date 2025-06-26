@@ -3,7 +3,7 @@ local Exchanger = {};
 Exchanger.__index = Exchanger;
 
 local recipe = ItemHandler.getRecipe();
-local compare_pp, compare_mp = ItemHandler.compare_pp, ItemHandler.compare_mp;
+local compare = ItemHandler.compare;
 
 function Exchanger:new(player)
 	local obj = {
@@ -37,7 +37,7 @@ function Exchanger:b3validate(f)
 		end
 		if (item) then
 			for j = 1, 3 do
-				if (compare_pp(item.item, f[j].fingerprint) and item.size == f[j].qty) then
+				if (compare(item.item, f[j].fingerprint) and item.size == f[j].qty) then
 					b[j] = true;
 					break;
 				end

@@ -34,27 +34,7 @@ local function compare_fluids(f0, f1, i0_qty, i1_qty)
 	end
 end
 
-local function compare_fluids_mp(f0, f1, i0_qty, i1_qty)
-	if (not f0.name and not f1.contents) then
-		return true;
-	elseif (f0.name and not f1.contents or not f0.name and f1.contents) then
-		return false;
-	elseif (f0.name and f1.contents) then
-		return f0.name == f1.contents.name and ((f0.amount / i0_qty) == (f1.contents.amount / i1_qty));
-	end
-end
-
-local function compare_fluids_mm(f0, f1, i0_qty, i1_qty)
-	if (not f0.name and not f1.name) then
-		return true;
-	elseif (f0.name and not f1.name or not f0.name and f1.name) then
-		return false;
-	elseif (f0.name and f1.name) then
-		return f0.name == f1.name and ((f0.amount / i0_qty) == (f1.amount / i1_qty));
-	end
-end
-
-function ItemHandler.compare_pp(i0, i1)
+function ItemHandler.compare(i0, i1)
 	local i0_qty, i1_qty = i0.qty or 1, i1.qty or 1;
 	local fluid, ench = false, false;
 	local f0, f1, e0, e1 = i0.fluid_container, i1.fluid_container, i0.enchanted_book, i1.enchanted_book;
@@ -68,38 +48,6 @@ function ItemHandler.compare_pp(i0, i1)
 		ench = (e0[1].name == e1[1].name) and (e0[1].level == e1[1].level);
 	end
 	return i0.id == i1.id and i0.dmg == i1.dmg and (fluid or ench);
-end
-
-function ItemHandler.compare_mp(i0, i1)
-	local i0_qty, i1_qty = i0.size or 1, i1.qty or 1;
-	local fluid, ench = false, false;
-	local f0, f1, e0, e1 = i0.fluid, i1.fluid_container, i0.enchantments, i1.enchanted_book;
-	if (not f0 and not f1 and not e0 and not e1) then
-		return i0.name == i1.id and i0.damage == i1.dmg;
-	end
-	if (f0 and f1) then
-		fluid = compare_fluids_mp(f0, f1, i0_qty, i1_qty);
-	end
-	if (e0 and e1 and e0[1] and e1[1]) then
-		ench = (e0[1].name == e1[1].name) and (e0[1].level == e1[1].level);
-	end
-	return i0.name == i1.id and i0.damage == i1.dmg and (fluid or ench);
-end
-
-function ItemHandler.compare_mm(i0, i1)
-	local i0_qty, i1_qty = i0.size or 1, i1.size or 1;
-	local fluid, ench = false, false;
-	local f0, f1, e0, e1 = i0.fluid, i1.fluid, i0.enchantments, i1.enchantments;
-	if (not f0 and not f1 and not e0 and not e1) then
-		return i0.name == i1.name and i0.damage == i1.damage;
-	end
-	if (f0 and f1) then
-		fluid = compare_fluids_mm(f0, f1, i0_qty, i1_qty);
-	end
-	if (e0 and e1 and e0[1] and e1[1]) then
-		ench = (e0[1].name == e1[1].name) and (e0[1].level == e1[1].level);
-	end
-	return i0.name == i1.name and i0.damage == i1.damage and (fluid or ench);
 end
 
 function ItemHandler.updateHash(t_r)
