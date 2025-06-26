@@ -1,8 +1,8 @@
 local ItemHandler = {};
 ItemHandler.__index = ItemHandler;
 
-local component = require("component");
-local me = component.proxy(require("config").me_main);
+local component, config = require("component"), require("config");
+local me = component.proxy(config.me_main);
 
 local items = {
 	{id = "dwcity:Dark_element", dmg = 0.0, name_l = "Элемент тьмы", nbt_hash = nil},
