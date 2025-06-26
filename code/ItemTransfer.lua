@@ -84,9 +84,9 @@ function ItemTransfer:transfer(fingerprint, direction, qty)
 		tmp = tmp - result;
 		total = total + result;
 		self.data.qty = total;
-	end
-	if (item) then
-		self.data.fingerprint.nbt_hash = item.nbt_hash;
+		if (item) then
+			self.data.fingerprint.nbt_hash = item.nbt_hash;
+		end
 	end
 	self.status = total == qty and status.success or status.fail;
 	return total == qty, total, qty - total, founded, b, result;

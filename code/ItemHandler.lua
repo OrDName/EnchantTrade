@@ -102,10 +102,10 @@ function ItemHandler.compare_mm(i0, i1)
 	return i0.name == i1.name and i0.damage == i1.damage and (fluid or ench);
 end
 
-function ItemHandler.updateHash()
+function ItemHandler.updateHash(t_r)
 	print("UPDATING HASH");
 	for i, item in pairs(me.getAvailableItems("ALL")) do
-		for j, fing in pairs(recipe) do
+		for j, fing in pairs(t_r) do
 			if (ItemHandler.compare_pp(item.item, fing.output[1][1])) then
 				fing.output[1][1].nbt_hash = item.fingerprint.nbt_hash;
 			end

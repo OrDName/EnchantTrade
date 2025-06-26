@@ -5,7 +5,7 @@ Exchanger.__index = Exchanger;
 local recipe = ItemHandler.getRecipe();
 local compare_pp, compare_mp = ItemHandler.compare_pp, ItemHandler.compare_mp;
 
-ItemHandler.updateHash();
+ItemHandler.updateHash(recipe);
 
 function Exchanger:new(player)
 	local obj = {
