@@ -30,11 +30,9 @@ end
 
 function Exchanger:resetResvME()
 	local list = self.me_resv.me.getAvailableItems("ALL");
-	local pexp = self.me_resv:pexp;
 	for i, item in pairs(list) do
-		pexp(item.fingerprint, "DOWN", item.size);
+		self.me_resv:pexp(item.fingerprint, "DOWN", item.size);
 	end
-
 end
 
 function Exchanger:b3validate(f)
