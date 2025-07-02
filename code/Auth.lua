@@ -34,6 +34,7 @@ end
 function Auth:deauth()
 	Logger:log("Deauth " .. tostring(self.player));
 	self.player = "";
+	self.ex0:resetResvME();
 	self.ex0 = nil;
 	self.ind = -1;
 	self.conf = false;

@@ -35,6 +35,22 @@ function METransfer:__tostring()
 	return "player: " .. tostring(self.player) .. ",	status: " .. tostring(self.status);
 end
 
+function METransfer:pexp(fingerprint, direction, qty)
+	local total, tmp = 0, qty;
+	local b, result = true, nil;
+	while (b and total < qty) do
+		b, result = pcall(function() return self.me.exportItem(fingerprint, direction, tmp); end);
+		if (not b or type(result) ~= "table") then
+			break;
+		end
+		if (not result.size) then
+			break;
+		end
+		tmp = tmp - result.size;
+		total = total + result.size;
+	end
+end
+
 function METransfer:transfer(fingerprint, direction, qty)
 	self:resetData();
 	fingerprint = fingerprint or {id = "empty_shit", dmg = 0.0};
